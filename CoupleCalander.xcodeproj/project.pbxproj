@@ -11,6 +11,13 @@
 		C0862B702BF460CA009308D1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0862B6F2BF460CA009308D1 /* ContentView.swift */; };
 		C0862B722BF460CA009308D1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0862B712BF460CA009308D1 /* Assets.xcassets */; };
 		C0862B752BF460CA009308D1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0862B742BF460CA009308D1 /* Preview Assets.xcassets */; };
+		C0862B7E2BF46146009308D1 /* DateModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C0862B7C2BF46146009308D1 /* DateModel.xcdatamodeld */; };
+		C0862B802BF4621F009308D1 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0862B7F2BF4621F009308D1 /* DataController.swift */; };
+		C0862B872BF46DBE009308D1 /* AddDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0862B862BF46DBE009308D1 /* AddDateView.swift */; };
+		C0862B892BF478CD009308D1 /* TimeFormatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0862B882BF478CD009308D1 /* TimeFormatting.swift */; };
+		C0862B8B2BF491E2009308D1 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0862B8A2BF491E2009308D1 /* MainView.swift */; };
+		C0862B8D2BF496B9009308D1 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C0862B8C2BF496B9009308D1 /* Launch Screen.storyboard */; };
+		C0862B8F2BF4A098009308D1 /* EditDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0862B8E2BF4A098009308D1 /* EditDateView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +26,13 @@
 		C0862B6F2BF460CA009308D1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		C0862B712BF460CA009308D1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C0862B742BF460CA009308D1 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		C0862B7D2BF46146009308D1 /* DateModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DateModel.xcdatamodel; sourceTree = "<group>"; };
+		C0862B7F2BF4621F009308D1 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
+		C0862B862BF46DBE009308D1 /* AddDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDateView.swift; sourceTree = "<group>"; };
+		C0862B882BF478CD009308D1 /* TimeFormatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeFormatting.swift; sourceTree = "<group>"; };
+		C0862B8A2BF491E2009308D1 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		C0862B8C2BF496B9009308D1 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		C0862B8E2BF4A098009308D1 /* EditDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDateView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,10 +65,13 @@
 		C0862B6C2BF460CA009308D1 /* CoupleCalander */ = {
 			isa = PBXGroup;
 			children = (
+				C0862B852BF46DA1009308D1 /* Helpers */,
+				C0862B842BF46D94009308D1 /* Views */,
+				C0862B7B2BF46123009308D1 /* DataModel */,
 				C0862B6D2BF460CA009308D1 /* CoupleCalanderApp.swift */,
-				C0862B6F2BF460CA009308D1 /* ContentView.swift */,
 				C0862B712BF460CA009308D1 /* Assets.xcassets */,
 				C0862B732BF460CA009308D1 /* Preview Content */,
+				C0862B8C2BF496B9009308D1 /* Launch Screen.storyboard */,
 			);
 			path = CoupleCalander;
 			sourceTree = "<group>";
@@ -65,6 +82,34 @@
 				C0862B742BF460CA009308D1 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		C0862B7B2BF46123009308D1 /* DataModel */ = {
+			isa = PBXGroup;
+			children = (
+				C0862B7C2BF46146009308D1 /* DateModel.xcdatamodeld */,
+				C0862B7F2BF4621F009308D1 /* DataController.swift */,
+			);
+			path = DataModel;
+			sourceTree = "<group>";
+		};
+		C0862B842BF46D94009308D1 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C0862B862BF46DBE009308D1 /* AddDateView.swift */,
+				C0862B6F2BF460CA009308D1 /* ContentView.swift */,
+				C0862B8A2BF491E2009308D1 /* MainView.swift */,
+				C0862B8E2BF4A098009308D1 /* EditDateView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		C0862B852BF46DA1009308D1 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				C0862B882BF478CD009308D1 /* TimeFormatting.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -125,6 +170,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C0862B8D2BF496B9009308D1 /* Launch Screen.storyboard in Resources */,
 				C0862B752BF460CA009308D1 /* Preview Assets.xcassets in Resources */,
 				C0862B722BF460CA009308D1 /* Assets.xcassets in Resources */,
 			);
@@ -138,6 +184,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				C0862B702BF460CA009308D1 /* ContentView.swift in Sources */,
+				C0862B8B2BF491E2009308D1 /* MainView.swift in Sources */,
+				C0862B892BF478CD009308D1 /* TimeFormatting.swift in Sources */,
+				C0862B802BF4621F009308D1 /* DataController.swift in Sources */,
+				C0862B8F2BF4A098009308D1 /* EditDateView.swift in Sources */,
+				C0862B872BF46DBE009308D1 /* AddDateView.swift in Sources */,
+				C0862B7E2BF46146009308D1 /* DateModel.xcdatamodeld in Sources */,
 				C0862B6E2BF460CA009308D1 /* CoupleCalanderApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -275,11 +327,11 @@
 				DEVELOPMENT_TEAM = 62BCLQNF78;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "우리의기억";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -287,9 +339,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.kgc.CoupleCalander;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -304,11 +360,11 @@
 				DEVELOPMENT_TEAM = 62BCLQNF78;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "우리의기억";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -316,9 +372,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.kgc.CoupleCalander;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -344,6 +404,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		C0862B7C2BF46146009308D1 /* DateModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				C0862B7D2BF46146009308D1 /* DateModel.xcdatamodel */,
+			);
+			currentVersion = C0862B7D2BF46146009308D1 /* DateModel.xcdatamodel */;
+			name = DateModel.xcdatamodeld;
+			path = /Users/kyucheolkim/Desktop/STUDY/CoupleCalander/CoupleCalander/DataModel/DateModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = C0862B622BF460CA009308D1 /* Project object */;
 }
