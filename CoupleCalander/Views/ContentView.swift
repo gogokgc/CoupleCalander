@@ -10,7 +10,10 @@ import CoreData
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) var managedObjContext
-    @FetchRequest(sortDescriptors: [SortDescriptor(\.startDate, order: .reverse)]) var dateCount: FetchedResults<DateCount>
+    @FetchRequest(
+        sortDescriptors: [NSSortDescriptor(keyPath: \DateCount.startDate, ascending: true)],
+        animation: .default)
+    private var dateCount: FetchedResults<DateCount>
     
     @State private var showingEditView = false
     
@@ -35,15 +38,16 @@ struct ContentView: View {
             }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                //TODO: 수정기능 버튼, 전체 메뉴버튼 추가
-                ToolbarItem(placement: .topBarTrailing) {
-                    NavigationLink {
-                        EditDateView(dateCount: dateCount[0])
-                    } label: {
-                        Label("수정", systemImage: "pencil.circle")
+                if !dateCount.isEmpty {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        NavigationLink {
+                            EditDateView(dateCount: dateCount[0])
+                        } label: {
+                            Label("수정", systemImage: "pencil.circle")
+                        }
                     }
                 }
-                
+                //TODO: 전체 메뉴버튼 추가
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         
