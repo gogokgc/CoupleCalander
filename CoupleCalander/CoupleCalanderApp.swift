@@ -8,14 +8,13 @@
 import SwiftUI
 
 @main
-struct CoupleCalanderApp: App {
-    // 데이터베이스 삽입
+struct CoupleCalendarApp: App {
     @StateObject private var dataController = DataController()
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environment(\.managedObjectContext, dataController.container.viewContext) //
+            ContentView(viewModel: DateViewModel(dataController: dataController))
+                .environment(\.managedObjectContext, dataController.container.viewContext)
         }
     }
 }

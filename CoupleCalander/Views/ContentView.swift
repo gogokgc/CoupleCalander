@@ -8,45 +8,38 @@
 import SwiftUI
 
 struct ContentView: View {
-    @Environment(\.managedObjectContext) var managedObjContext
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \DateCount.startDate, ascending: true)],
-        animation: .default)
-    private var dateCount: FetchedResults<DateCount>
+    @StateObject private var viewModel: DateViewModel
     
-    @State private var showingEditView = false
+    init(viewModel: DateViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+    }
     
     var body: some View {
-        NavigationStack{
+        NavigationStack {
             ZStack {
-                TabView(
-                    selection: .constant(1),
-                    content:  {
-                        MainView()
-                            .tabItem {
-                                Image(systemName: "heart")
-                            }
-                            .tag(1)
-                        Text("Tab Content 2")
-                            .tabItem {
-                                Image(systemName: "clipboard.fill")
-                            }
-                            .tag(2)
-                    }
-                )
+                TabView {
+                    MainView(viewModel: viewModel)
+                        .tabItem {
+                            Image(systemName: "heart")
+                        }
+                    Text("Tab Content 2")
+                        .tabItem {
+                            Image(systemName: "clipboard.fill")
+                        }
+                }
             }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                if !dateCount.isEmpty {
+                if !viewModel.dateCounts.isEmpty {
                     ToolbarItem(placement: .topBarTrailing) {
                         NavigationLink {
-                            EditDateView(dateCount: dateCount[0])
+                            EditDateView(viewModel: viewModel, dateCount: viewModel.dateCounts[0])
                         } label: {
                             Label("수정", systemImage: "pencil.circle")
                         }
                     }
                 }
-                //TODO: 전체 메뉴버튼 추가
+                // TODO: 전체 메뉴버튼 추가
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         
@@ -61,23 +54,23 @@ struct ContentView: View {
 
 //MARK: 일수 표현 뷰
 struct MainView: View {
-    @Environment(\.managedObjectContext) var managedObjContext
-    @FetchRequest(sortDescriptors: [SortDescriptor(\.startDate, order: .reverse)]) var dateCount: FetchedResults<DateCount>
+    @ObservedObject var viewModel: DateViewModel
     
     var body: some View {
         NavigationStack {
             VStack {
                 Spacer()
-                if dateCount.isEmpty {
+                if viewModel.dateCounts.isEmpty {
                     Text("처음 만난 날을 지정해 주세요!")
                         .padding(.bottom, 50)
                         .font(.title)
                         .bold()
-                    NavigationLink("등록하기", destination: AddDateView())
+                    NavigationLink("등록하기", destination: AddDateView(viewModel: viewModel))
                 } else {
-                    Text(startDateFormatting(date: dateCount[0].startDate!))
+                    let dateCount = viewModel.dateCounts[0]
+                    Text(startDateFormatting(date: dateCount.startDate!))
                         .padding(.bottom, 10)
-                    Text(calcDateSince(date: dateCount[0].startDate!))
+                    Text(calcDateSince(date: dateCount.startDate!))
                         .font(.largeTitle)
                         .bold()
                 }
@@ -90,18 +83,12 @@ struct MainView: View {
 
 //MARK: 날짜 등록뷰
 struct AddDateView: View {
-    //CoreData의 관리 객체 컨텍스트를 가져옵니다
-    @Environment(\.managedObjectContext) var managedObjContext
-    //화면을 닫는 데 사용되는 기능을 가져옵니다
+    @ObservedObject var viewModel: DateViewModel
     @Environment(\.dismiss) var dismiss
-    
-    @State private var name = ""
-    @State private var startDate = Date()
     
     var body: some View {
         Form {
             Section {
-                
                 VStack {
                     Label(
                         title: { Text("우리 사랑의 첫 시작일") },
@@ -109,19 +96,18 @@ struct AddDateView: View {
                     )
                     .padding()
                     
-                    DatePicker("날짜를 선택해 주세요", selection: $startDate, displayedComponents: .date)
+                    DatePicker("날짜를 선택해 주세요", selection: $viewModel.startDate, displayedComponents: .date)
                         .datePickerStyle(.graphical)
                         .padding()
                     Spacer()
-                    HStack{
+                    HStack {
                         Button("등록") {
-                            DataController().add(name: name, startDate: startDate, context: managedObjContext)
+                            viewModel.addDateCount()
                             dismiss()
                         }
                     }
                     Spacer()
                 }
-                
             }
         }
     }
@@ -129,14 +115,10 @@ struct AddDateView: View {
 
 //MARK: 날짜 수정뷰
 struct EditDateView: View {
-    @Environment(\.managedObjectContext) var managedObjContext
+    @ObservedObject var viewModel: DateViewModel
     @Environment(\.dismiss) var dismiss
     
-    //엔티티의 특정 인스턴스를 편집
-    var dateCount: FetchedResults<DateCount>.Element
-    
-    @State private var name = ""
-    @State private var editDate = Date()
+    var dateCount: DateCount
     
     var body: some View {
         Form {
@@ -148,13 +130,13 @@ struct EditDateView: View {
                     )
                     .padding()
                     
-                    DatePicker("날짜를 선택해 주세요", selection: $editDate, displayedComponents: .date)
+                    DatePicker("날짜를 선택해 주세요", selection: $viewModel.startDate, displayedComponents: .date)
                         .datePickerStyle(.graphical)
                         .padding()
                     Spacer()
-                    HStack{
+                    HStack {
                         Button("수정") {
-                            DataController().edit(dateCount: dateCount, name: name, editDate: editDate, context: managedObjContext)
+                            viewModel.editDateCount(dateCount: dateCount)
                             dismiss()
                         }
                     }
@@ -165,6 +147,10 @@ struct EditDateView: View {
     }
 }
 
-#Preview {
-    ContentView()
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        let dataController = DataController()
+        let viewModel = DateViewModel(dataController: dataController)
+        ContentView(viewModel: viewModel)
+    }
 }
