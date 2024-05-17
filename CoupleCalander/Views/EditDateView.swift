@@ -13,7 +13,6 @@ struct EditDateView: View {
     
     //엔티티의 특정 인스턴스를 편집
     var dateCount: FetchedResults<DateCount>.Element
-//    var dateCount: [DateCount]
     
     @State private var name = ""
     @State private var editDate = Date()
