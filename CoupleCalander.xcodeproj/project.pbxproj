@@ -7,20 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C05814F12BF6F29C0080D413 /* DateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05814F02BF6F29C0080D413 /* DateViewModel.swift */; };
 		C0862B6E2BF460CA009308D1 /* CoupleCalanderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0862B6D2BF460CA009308D1 /* CoupleCalanderApp.swift */; };
 		C0862B702BF460CA009308D1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0862B6F2BF460CA009308D1 /* ContentView.swift */; };
 		C0862B722BF460CA009308D1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0862B712BF460CA009308D1 /* Assets.xcassets */; };
 		C0862B752BF460CA009308D1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0862B742BF460CA009308D1 /* Preview Assets.xcassets */; };
 		C0862B7E2BF46146009308D1 /* DateModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C0862B7C2BF46146009308D1 /* DateModel.xcdatamodeld */; };
 		C0862B802BF4621F009308D1 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0862B7F2BF4621F009308D1 /* DataController.swift */; };
-		C0862B872BF46DBE009308D1 /* AddDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0862B862BF46DBE009308D1 /* AddDateView.swift */; };
 		C0862B892BF478CD009308D1 /* TimeFormatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0862B882BF478CD009308D1 /* TimeFormatting.swift */; };
-		C0862B8B2BF491E2009308D1 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0862B8A2BF491E2009308D1 /* MainView.swift */; };
 		C0862B8D2BF496B9009308D1 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C0862B8C2BF496B9009308D1 /* Launch Screen.storyboard */; };
-		C0862B8F2BF4A098009308D1 /* EditDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0862B8E2BF4A098009308D1 /* EditDateView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C05814F02BF6F29C0080D413 /* DateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateViewModel.swift; sourceTree = "<group>"; };
 		C0862B6A2BF460CA009308D1 /* CoupleCalander.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoupleCalander.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0862B6D2BF460CA009308D1 /* CoupleCalanderApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoupleCalanderApp.swift; sourceTree = "<group>"; };
 		C0862B6F2BF460CA009308D1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -28,11 +27,8 @@
 		C0862B742BF460CA009308D1 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		C0862B7D2BF46146009308D1 /* DateModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DateModel.xcdatamodel; sourceTree = "<group>"; };
 		C0862B7F2BF4621F009308D1 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
-		C0862B862BF46DBE009308D1 /* AddDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDateView.swift; sourceTree = "<group>"; };
 		C0862B882BF478CD009308D1 /* TimeFormatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeFormatting.swift; sourceTree = "<group>"; };
-		C0862B8A2BF491E2009308D1 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		C0862B8C2BF496B9009308D1 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
-		C0862B8E2BF4A098009308D1 /* EditDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDateView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,6 +42,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C05814EF2BF6F27F0080D413 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				C05814F02BF6F29C0080D413 /* DateViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
 		C0862B612BF460CA009308D1 = {
 			isa = PBXGroup;
 			children = (
@@ -65,6 +69,7 @@
 		C0862B6C2BF460CA009308D1 /* CoupleCalander */ = {
 			isa = PBXGroup;
 			children = (
+				C05814EF2BF6F27F0080D413 /* ViewModels */,
 				C0862B852BF46DA1009308D1 /* Helpers */,
 				C0862B842BF46D94009308D1 /* Views */,
 				C0862B7B2BF46123009308D1 /* DataModel */,
@@ -96,10 +101,7 @@
 		C0862B842BF46D94009308D1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				C0862B862BF46DBE009308D1 /* AddDateView.swift */,
 				C0862B6F2BF460CA009308D1 /* ContentView.swift */,
-				C0862B8A2BF491E2009308D1 /* MainView.swift */,
-				C0862B8E2BF4A098009308D1 /* EditDateView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -184,11 +186,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				C0862B702BF460CA009308D1 /* ContentView.swift in Sources */,
-				C0862B8B2BF491E2009308D1 /* MainView.swift in Sources */,
 				C0862B892BF478CD009308D1 /* TimeFormatting.swift in Sources */,
 				C0862B802BF4621F009308D1 /* DataController.swift in Sources */,
-				C0862B8F2BF4A098009308D1 /* EditDateView.swift in Sources */,
-				C0862B872BF46DBE009308D1 /* AddDateView.swift in Sources */,
+				C05814F12BF6F29C0080D413 /* DateViewModel.swift in Sources */,
 				C0862B7E2BF46146009308D1 /* DateModel.xcdatamodeld in Sources */,
 				C0862B6E2BF460CA009308D1 /* CoupleCalanderApp.swift in Sources */,
 			);
