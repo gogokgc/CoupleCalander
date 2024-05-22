@@ -23,6 +23,7 @@ struct ContentView: View {
                             Image(systemName: "heart")
                         }
                     Text("Tab Content 2")
+                    //TODO: 기념일 리스트 추가
                         .tabItem {
                             Image(systemName: "clipboard.fill")
                         }
