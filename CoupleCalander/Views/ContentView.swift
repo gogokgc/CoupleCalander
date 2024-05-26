@@ -24,6 +24,7 @@ struct ContentView: View {
                         }
                     Text("Tab Content 2")
                     //TODO: 기념일 리스트 추가
+                    DaylistView(viewModel: viewModel)
                         .tabItem {
                             Image(systemName: "clipboard.fill")
                         }
@@ -146,6 +147,17 @@ struct EditDateView: View {
             }
         }
     }
+}
+
+struct DaylistView: View {
+    @ObservedObject var viewModel: DateViewModel
+    
+    var body: some View {
+        VStack {
+            
+        }
+    }
+    
 }
 
 struct ContentView_Previews: PreviewProvider {
