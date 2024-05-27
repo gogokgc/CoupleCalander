@@ -24,7 +24,7 @@ struct ContentView: View {
                         }
                     Text("Tab Content 2")
                     //TODO: 기념일 리스트 추가
-                    DaylistView(viewModel: viewModel)
+                    DaylistView(startDate: viewModel.startDate)
                         .tabItem {
                             Image(systemName: "clipboard.fill")
                         }
@@ -150,14 +150,28 @@ struct EditDateView: View {
 }
 
 struct DaylistView: View {
-    @ObservedObject var viewModel: DateViewModel
+    //    @ObservedObject var viewModel: DateViewModel
+    let startDate: Date
+    let intervals: [Int] = Array(stride(from: 100, through: 10000, by: 100))
+    @State private var calculatedDates: [Date] = []
     
     var body: some View {
-        VStack {
-            
+        ScrollView {
+            Text("기념일")
+            VStack(spacing: 5) {
+                ForEach(calculatedDates, id: \.self) { date in
+                    Text(formattedDate(date))
+                        .padding()
+                        .cornerRadius(8)
+//                        .foregroundColor(.white)
+                }
+            }
+            .padding()
+        }
+        .onAppear {
+            calculatedDates = calculateDates(from: startDate, intervals: intervals)
         }
     }
-    
 }
 
 struct ContentView_Previews: PreviewProvider {

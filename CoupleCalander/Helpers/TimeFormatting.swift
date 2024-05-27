@@ -21,3 +21,15 @@ func startDateFormatting(date: Date) -> String {
     
     return formatter.string(from: date)
 }
+
+func formattedDate(_ date: Date) -> String {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "yyyy-MM-dd"
+    
+    return formatter.string(from: date)
+}
+
+func calculateDates(from startDate: Date, intervals: [Int]) -> [Date] {
+    let calendar = Calendar.current
+    return intervals.map { calendar.date(byAdding: .day, value: $0, to: startDate)! }
+}
