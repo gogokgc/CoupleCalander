@@ -22,8 +22,6 @@ struct ContentView: View {
                         .tabItem {
                             Image(systemName: "heart")
                         }
-                    Text("Tab Content 2")
-                    //TODO: 기념일 리스트 추가
                     DaylistView(startDate: viewModel.startDate)
                         .tabItem {
                             Image(systemName: "clipboard.fill")
@@ -153,23 +151,32 @@ struct DaylistView: View {
     //    @ObservedObject var viewModel: DateViewModel
     let startDate: Date
     let intervals: [Int] = Array(stride(from: 100, through: 10000, by: 100))
+    let specialDates: [DateComponents] = [DateComponents(year: 1993, month: 1, day: 15)] // 생일을 1월 15일로 설정
     @State private var calculatedDates: [Date] = []
     
     var body: some View {
         ScrollView {
             Text("기념일")
             VStack(spacing: 5) {
-                ForEach(calculatedDates, id: \.self) { date in
-                    Text(formattedDate(date))
-                        .padding()
-                        .cornerRadius(8)
-//                        .foregroundColor(.white)
+                ForEach(Array(calculatedDates.enumerated()), id: \.offset) { index, date in
+                    HStack{
+                        if index < intervals.count {
+                            Text("\(intervals[index])일")
+                        } else {
+                            Text("특별한 날")
+                        }
+                        Spacer()
+                        Text(formattedDate(date))
+                            .padding()
+                            .cornerRadius(8)
+                        Spacer()
+                    }
                 }
             }
             .padding()
         }
         .onAppear {
-            calculatedDates = calculateDates(from: startDate, intervals: intervals)
+            calculatedDates = calculateDates(from: startDate, intervals: intervals, specialDates: specialDates)
         }
     }
 }
