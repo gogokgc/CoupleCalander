@@ -77,6 +77,13 @@ struct MainView: View {
                 Spacer()
                 Spacer()
             }
+            .background(
+                Image("background1")
+                    .resizable()
+                    .scaledToFill()
+                    .blur(radius: 2) // 흐림 효과 추가
+//                    .edgesIgnoringSafeArea(.all) // 이미지가 안전 영역을 무시하고 전체 화면을 채우도록 설정
+            )
         }
     }
 }
@@ -151,7 +158,6 @@ struct DaylistView: View {
     //    @ObservedObject var viewModel: DateViewModel
     let startDate: Date
     let intervals: [Int] = Array(stride(from: 100, through: 10000, by: 100))
-    let specialDates: [DateComponents] = [DateComponents(year: 1993, month: 1, day: 15)] // 생일을 1월 15일로 설정
     @State private var calculatedDates: [Date] = []
     
     var body: some View {
@@ -161,9 +167,7 @@ struct DaylistView: View {
                 ForEach(Array(calculatedDates.enumerated()), id: \.offset) { index, date in
                     HStack{
                         if index < intervals.count {
-                            Text("\(intervals[index])일")
-                        } else {
-                            Text("특별한 날")
+                            Text("\(intervals[index])일 \(Image(systemName: "heart.fill"))")
                         }
                         Spacer()
                         Text(formattedDate(date))
@@ -176,7 +180,7 @@ struct DaylistView: View {
             .padding()
         }
         .onAppear {
-            calculatedDates = calculateDates(from: startDate, intervals: intervals, specialDates: specialDates)
+            calculatedDates = calculateDates(from: startDate, intervals: intervals)
         }
     }
 }

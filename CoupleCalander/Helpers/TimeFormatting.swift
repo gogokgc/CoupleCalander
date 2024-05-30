@@ -29,12 +29,7 @@ func formattedDate(_ date: Date) -> String {
     return formatter.string(from: date)
 }
 
-//func calculateDates(from startDate: Date, intervals: [Int]) -> [Date] {
-//    let calendar = Calendar.current
-//    return intervals.map { calendar.date(byAdding: .day, value: $0, to: startDate)! }
-//}
-
-func calculateDates(from startDate: Date, intervals: [Int], specialDates: [DateComponents]) -> [Date] {
+func calculateDates(from startDate: Date, intervals: [Int]) -> [Date] {
     let calendar = Calendar.current
     var dates: [Date] = []
 
@@ -45,28 +40,10 @@ func calculateDates(from startDate: Date, intervals: [Int], specialDates: [DateC
         }
     }
 
-    // Add special dates for the next few years
-    let currentYear = calendar.component(.year, from: startDate)
-    let numberOfYears = 10 // 예시로 10년간 반복
-
-    for year in currentYear..<(currentYear + numberOfYears) {
-        for components in specialDates {
-            var dateComponents = components
-            dateComponents.year = year
-            if let date = calendar.date(from: dateComponents) {
-                // Add only future dates relative to startDate
-                if date >= startDate {
-                    dates.append(date)
-                }
-            }
-        }
-    }
-
     // Sort dates
     dates.sort()
     return dates
 }
-
 
 func createDate(month: Int, day: Int) -> Date {
     let calendar = Calendar.current
