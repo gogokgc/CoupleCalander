@@ -19,7 +19,7 @@ class DateViewModel: ObservableObject {
     // ViewModel에서 Combine을 사용하여 비동기 데이터를 처리할 때, 구독을 취소할 수 있는 메커니즘을 제공하기 위해 선언
     private var cancellables = Set<AnyCancellable>()
     
-    @Published var calculatedDates: [Date] = []
+    @Published var calculatedDates: [(String, Date)] = []
     var todayIndex: Int? = nil
     let intervals: [Int]
     
@@ -60,7 +60,7 @@ class DateViewModel: ObservableObject {
         let intervalInSeconds = -date.timeIntervalSince(now)
         let intervalInDays = intervalInSeconds / (60 * 60 * 24) // 시간 간격을 일(day)로 변환
         
-        return "\(String(format: "%.0f", intervalInDays)) 일째 사랑중"
+        return "\(String(format: "%.0f", intervalInDays))"
     }
 
     func startDateFormatting(date: Date) -> String {
@@ -77,25 +77,32 @@ class DateViewModel: ObservableObject {
         return formatter.string(from: date)
     }
 
-    func calculateDates(from startDate: Date) -> [Date] {
+    func calculateDates(from startDate: Date) -> [(String, Date)] {
         let calendar = Calendar.current
-        var dates: [Date] = []
+        var dates: [(String, Date)] = []
 
         // Add interval dates
+//        for interval in intervals {
+//            if let date = calendar.date(byAdding: .day, value: interval, to: startDate) {
+//                dates.append(date)
+//            }
+//        }
+        // Add interval dates (100 days increments)
         for interval in intervals {
             if let date = calendar.date(byAdding: .day, value: interval, to: startDate) {
-                dates.append(date)
+                dates.append(("\(interval)일", date))
             }
         }
+        
 
         // Add today's date
-        dates.append(Date())
+        dates.append(("\(calcDateSince(date: startDate))일", Date()))
         
         // Sort dates
-        dates.sort()
+        dates.sort { $0.1 < $1.1 }
         
         // Set todayIndex
-        if let index = dates.firstIndex(where: { calendar.isDateInToday($0) }) {
+        if let index = dates.firstIndex(where: { calendar.isDate($0.1, inSameDayAs: Date()) }) {
             self.todayIndex = index
         }
         
@@ -116,6 +123,17 @@ class DateViewModel: ObservableObject {
         } else {
             return "\(-daysLeft) 일전"
         }
+    }
+    
+    func isPastDate(_ date: Date) -> Bool {
+        let today = Calendar.current.startOfDay(for: Date())
+        let targetDay = Calendar.current.startOfDay(for: date)
+        return targetDay < today
+    }
+    
+    func isToday(_ date: Date) -> Bool {
+        let today = Calendar.current.startOfDay(for: Date())
+        return Calendar.current.isDate(date, inSameDayAs: today)
     }
 
     func createDate(month: Int, day: Int) -> Date {

@@ -44,7 +44,7 @@ struct ContentView: View {
                     Button {
                         
                     } label: {
-                        Label("수정", systemImage: "menucard")
+                        Label("메뉴", systemImage: "menucard")
                     }
                 }
             }
@@ -70,7 +70,7 @@ struct MainView: View {
                     let dateCount = viewModel.dateCounts[0]
                     Text(viewModel.startDateFormatting(date: dateCount.startDate!))
                         .padding(.bottom, 10)
-                    Text(viewModel.calcDateSince(date: dateCount.startDate!))
+                    Text("\(viewModel.calcDateSince(date: dateCount.startDate!)) 일째 사랑중")
                         .font(.largeTitle)
                         .bold()
                     Spacer()
@@ -173,7 +173,7 @@ struct EditDateView: View {
 struct DaylistView: View {
     @ObservedObject var viewModel: DateViewModel
     let startDate: Date
-    @State private var calculatedDates: [Date] = []
+    @State private var calculatedDates: [(String, Date)] = []
     
     var body: some View {
         ScrollViewReader { proxy in
@@ -185,21 +185,22 @@ struct DaylistView: View {
                 VStack(spacing: 20) {
                     ForEach(Array(calculatedDates.enumerated()), id: \.offset) { index, date in
                         HStack {
-                            if index < viewModel.intervals.count {
-                                Text("\(viewModel.intervals[index])일")
-                                    .font(.headline)
-                                    .foregroundColor(index % 2 == 0 ? .pink : .blue)
+                            VStack(alignment: .leading) {
+                                HStack {
+                                    Text(date.0)
+                                        .font(.headline)
+                                        .foregroundColor(viewModel.isToday(date.1) ? .red : (index % 2 == 0 ? .pink : .blue))
+                                    Image(systemName: "heart.fill")
+                                        .foregroundColor(index % 2 == 0 ? .pink : .blue)
+                                }
+                                Text(viewModel.formattedDate(date.1))
+                                    .font(.system(size: 12))
                             }
                             Spacer()
-                            Text(viewModel.formattedDate(date))
-                                .font(.subheadline)
-                                .padding(10)
-                                .background(Color(UIColor.secondarySystemBackground))
-                                .cornerRadius(8)
                             Spacer()
-                            Text(viewModel.calculateDDay(date))
+                            Text(viewModel.calculateDDay(date.1))
                                 .font(.footnote)
-                                .foregroundColor(.gray)
+                                .foregroundColor(viewModel.isPastDate(date.1) ? .gray : .pink)
                         }
                         .padding(.horizontal)
                         .padding(.vertical, 5)
