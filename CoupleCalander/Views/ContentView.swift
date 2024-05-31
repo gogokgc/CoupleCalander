@@ -12,6 +12,15 @@ struct ContentView: View {
     
     init(viewModel: DateViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
+        
+        let appearance = UITabBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = UIColor.black // Set background color with opacity
+        appearance.selectionIndicatorTintColor = UIColor.red
+        
+        UITabBar.appearance().standardAppearance = appearance
+        UITabBar.appearance().scrollEdgeAppearance = appearance
+        UITabBar.appearance().unselectedItemTintColor = UIColor.white // Set unselected item color
     }
     
     var body: some View {
@@ -93,14 +102,14 @@ struct MainView: View {
                 Spacer()
                 Spacer()
             }
-            .background(
-                Image("background1")
-                    .resizable()
-                    .scaledToFill()
-                    .blur(radius: 2) // 흐림 효과 추가
-//                    .edgesIgnoringSafeArea(.all) // 이미지가 안전 영역을 무시하고 전체 화면을 채우도록 설정
-            )
+            
         }
+        .background(
+            Image("Background3")
+                .resizable()
+                .blur(radius: 1) // 흐림 효과 추가
+                .edgesIgnoringSafeArea(.all) // 이미지가 안전 영역을 무시하고 전체 화면을 채우도록 설정
+        )
     }
 }
 
@@ -174,7 +183,7 @@ struct DaylistView: View {
     @ObservedObject var viewModel: DateViewModel
     let startDate: Date
     @State private var calculatedDates: [(String, Date)] = []
-    
+
     var body: some View {
         ScrollViewReader { proxy in
             ScrollView {
@@ -183,6 +192,7 @@ struct DaylistView: View {
                     .bold()
                     .padding(.top, 20)
                 VStack(spacing: 20) {
+                    Spacer()
                     ForEach(Array(calculatedDates.enumerated()), id: \.offset) { index, date in
                         HStack {
                             VStack(alignment: .leading) {
@@ -195,6 +205,7 @@ struct DaylistView: View {
                                 }
                                 Text(viewModel.formattedDate(date.1))
                                     .font(.system(size: 12))
+                                    .foregroundColor(.white)
                             }
                             Spacer()
                             Spacer()
@@ -204,11 +215,13 @@ struct DaylistView: View {
                         }
                         .padding(.horizontal)
                         .padding(.vertical, 5)
-                        .background(viewModel.todayIndex == index ? Color(UIColor.systemPink).opacity(0.1) : Color.clear)
+                        .background(viewModel.todayIndex == index ? Color(UIColor.systemPink).opacity(0.4) : Color.clear)
                         .cornerRadius(10)
                         .id(index)
                     }
                 }
+                .background(Color.black.opacity(0.7))
+                .cornerRadius(10)
                 .padding()
                 .onAppear {
                     calculatedDates = viewModel.calculateDates(from: startDate)
@@ -220,6 +233,13 @@ struct DaylistView: View {
                 }
             }
         }
+        .background(
+            Image("Background4")
+                .resizable()
+                .scaledToFill()
+                .blur(radius: 1) // 흐림 효과 추가
+                .edgesIgnoringSafeArea(.all) // 이미지가 안전 영역을 무시하고 전체 화면을 채우도록 설정
+        )
     }
 }
 

@@ -81,12 +81,6 @@ class DateViewModel: ObservableObject {
         let calendar = Calendar.current
         var dates: [(String, Date)] = []
 
-        // Add interval dates
-//        for interval in intervals {
-//            if let date = calendar.date(byAdding: .day, value: interval, to: startDate) {
-//                dates.append(date)
-//            }
-//        }
         // Add interval dates (100 days increments)
         for interval in intervals {
             if let date = calendar.date(byAdding: .day, value: interval, to: startDate) {
