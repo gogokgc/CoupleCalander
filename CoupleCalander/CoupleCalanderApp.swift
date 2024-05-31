@@ -13,7 +13,7 @@ struct CoupleCalendarApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView(viewModel: DateViewModel(dataController: dataController))
+            ContentView(viewModel: DateViewModel(dataController: dataController, startDate: Date()))
                 .environment(\.managedObjectContext, dataController.container.viewContext)
         }
     }

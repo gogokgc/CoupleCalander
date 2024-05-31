@@ -22,7 +22,7 @@ struct ContentView: View {
                         .tabItem {
                             Image(systemName: "heart")
                         }
-                    DaylistView(startDate: viewModel.startDate)
+                    DaylistView(viewModel: viewModel, startDate: viewModel.dateCounts[0].startDate ?? Date())
                         .tabItem {
                             Image(systemName: "clipboard.fill")
                         }
@@ -68,11 +68,27 @@ struct MainView: View {
                     NavigationLink("등록하기", destination: AddDateView(viewModel: viewModel))
                 } else {
                     let dateCount = viewModel.dateCounts[0]
-                    Text(startDateFormatting(date: dateCount.startDate!))
+                    Text(viewModel.startDateFormatting(date: dateCount.startDate!))
                         .padding(.bottom, 10)
-                    Text(calcDateSince(date: dateCount.startDate!))
+                    Text(viewModel.calcDateSince(date: dateCount.startDate!))
                         .font(.largeTitle)
                         .bold()
+                    Spacer()
+                    HStack {
+                        Spacer()
+                        VStack {
+                            Image(systemName: "person")
+                            Text("birthday")
+                        }
+                        Spacer()
+                        Image(systemName: "heart.fill")
+                        Spacer()
+                        VStack {
+                            Image(systemName: "person")
+                            Text("birthday")
+                        }
+                        Spacer()
+                    }
                 }
                 Spacer()
                 Spacer()
@@ -155,32 +171,53 @@ struct EditDateView: View {
 }
 
 struct DaylistView: View {
-    //    @ObservedObject var viewModel: DateViewModel
+    @ObservedObject var viewModel: DateViewModel
     let startDate: Date
-    let intervals: [Int] = Array(stride(from: 100, through: 10000, by: 100))
     @State private var calculatedDates: [Date] = []
     
     var body: some View {
-        ScrollView {
-            Text("기념일")
-            VStack(spacing: 5) {
-                ForEach(Array(calculatedDates.enumerated()), id: \.offset) { index, date in
-                    HStack{
-                        if index < intervals.count {
-                            Text("\(intervals[index])일 \(Image(systemName: "heart.fill"))")
+        ScrollViewReader { proxy in
+            ScrollView {
+                Text("기념일")
+                    .font(.largeTitle)
+                    .bold()
+                    .padding(.top, 20)
+                VStack(spacing: 20) {
+                    ForEach(Array(calculatedDates.enumerated()), id: \.offset) { index, date in
+                        HStack {
+                            if index < viewModel.intervals.count {
+                                Text("\(viewModel.intervals[index])일")
+                                    .font(.headline)
+                                    .foregroundColor(index % 2 == 0 ? .pink : .blue)
+                            }
+                            Spacer()
+                            Text(viewModel.formattedDate(date))
+                                .font(.subheadline)
+                                .padding(10)
+                                .background(Color(UIColor.secondarySystemBackground))
+                                .cornerRadius(8)
+                            Spacer()
+                            Text(viewModel.calculateDDay(date))
+                                .font(.footnote)
+                                .foregroundColor(.gray)
                         }
-                        Spacer()
-                        Text(formattedDate(date))
-                            .padding()
-                            .cornerRadius(8)
-                        Spacer()
+                        .padding(.horizontal)
+                        .padding(.vertical, 5)
+                        .background(viewModel.todayIndex == index ? Color(UIColor.systemPink).opacity(0.1) : Color.clear)
+                        .cornerRadius(10)
+                        .id(index)
+                    }
+                }
+                .padding()
+                .onAppear {
+                    calculatedDates = viewModel.calculateDates(from: startDate)
+                    if let todayIndex = viewModel.todayIndex {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            proxy.scrollTo(todayIndex, anchor: .center)
+                        }
                     }
                 }
             }
-            .padding()
-        }
-        .onAppear {
-            calculatedDates = calculateDates(from: startDate, intervals: intervals)
         }
     }
 }
@@ -188,7 +225,7 @@ struct DaylistView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         let dataController = DataController()
-        let viewModel = DateViewModel(dataController: dataController)
+        let viewModel = DateViewModel(dataController: dataController, startDate: Date())
         ContentView(viewModel: viewModel)
     }
 }

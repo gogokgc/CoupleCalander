@@ -13,15 +13,22 @@ class DateViewModel: ObservableObject {
     // Published 프로퍼티는 변경 시 뷰를 업데이트하도록 해줌
     @Published var dateCounts: [DateCount] = [] // Core Data에서 불러온 DateCount 객체를 저장.
     @Published var name: String = ""
-    @Published var startDate: Date = Date()
+    @Published var startDate: Date
     
     private let dataController: DataController
     // ViewModel에서 Combine을 사용하여 비동기 데이터를 처리할 때, 구독을 취소할 수 있는 메커니즘을 제공하기 위해 선언
     private var cancellables = Set<AnyCancellable>()
     
+    @Published var calculatedDates: [Date] = []
+    var todayIndex: Int? = nil
+    let intervals: [Int]
+    
     // ViewModel이 초기화될 때 Core Data에서 데이터를 가져오기 위해 fetchDateCounts()를 호출.
-    init(dataController: DataController) {
+    init(dataController: DataController, startDate: Date, intervals: [Int] = Array(stride(from: 100, through: 10000, by: 100))) {
         self.dataController = dataController
+        self.startDate = startDate
+        self.intervals = intervals
+        self.calculatedDates = calculateDates(from: startDate)
         fetchDateCounts()
     }
     
@@ -46,6 +53,78 @@ class DateViewModel: ObservableObject {
     func editDateCount(dateCount: DateCount) {
         dataController.edit(dateCount: dateCount, name: name, editDate: startDate, context: dataController.container.viewContext)
         fetchDateCounts()
+    }
+    
+    func calcDateSince(date: Date) -> String {
+        let now = Date()
+        let intervalInSeconds = -date.timeIntervalSince(now)
+        let intervalInDays = intervalInSeconds / (60 * 60 * 24) // 시간 간격을 일(day)로 변환
+        
+        return "\(String(format: "%.0f", intervalInDays)) 일째 사랑중"
+    }
+
+    func startDateFormatting(date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy.MM.dd"
+        
+        return formatter.string(from: date)
+    }
+
+    func formattedDate(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy.MM.dd (E)"
+        formatter.locale = Locale(identifier: "ko_KR")
+        return formatter.string(from: date)
+    }
+
+    func calculateDates(from startDate: Date) -> [Date] {
+        let calendar = Calendar.current
+        var dates: [Date] = []
+
+        // Add interval dates
+        for interval in intervals {
+            if let date = calendar.date(byAdding: .day, value: interval, to: startDate) {
+                dates.append(date)
+            }
+        }
+
+        // Add today's date
+        dates.append(Date())
+        
+        // Sort dates
+        dates.sort()
+        
+        // Set todayIndex
+        if let index = dates.firstIndex(where: { calendar.isDateInToday($0) }) {
+            self.todayIndex = index
+        }
+        
+        return dates
+    }
+
+    func calculateDDay(_ date: Date) -> String {
+        let today = Calendar.current.startOfDay(for: Date())
+        let targetDay = Calendar.current.startOfDay(for: date)
+        let components = Calendar.current.dateComponents([.day], from: today, to: targetDay)
+        
+        guard let daysLeft = components.day else { return "" }
+        
+        if daysLeft == 0 {
+            return "오늘"
+        } else if daysLeft > 0 {
+            return "D-\(daysLeft)"
+        } else {
+            return "\(-daysLeft) 일전"
+        }
+    }
+
+    func createDate(month: Int, day: Int) -> Date {
+        let calendar = Calendar.current
+        var components = DateComponents()
+        components.year = calendar.component(.year, from: Date())
+        components.month = month
+        components.day = day
+        return calendar.date(from: components) ?? Date()
     }
 }
 
